@@ -22,7 +22,7 @@ app.use(cors(
     }
 ));
 app.use(express.json())
-require('./routers/original.router')(app);
+
 require('./routers/history.router')(app);
 require('./routers/user.router')(app);
 require('./routers/admin.router')(app);
