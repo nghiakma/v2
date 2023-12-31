@@ -2,14 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const https = require('https');
-const fss = require('fs');
+const readFileSync = require('fs');
 const WebSocket = require('ws')
 dotenv.config()
 
 const app = express();
 const server = https.createServer(app,{
- cert: fss.readFileSync('./cetificates/cert.pem'),
-  key: fss.readFileSync('./cetificates/key.pem')
+ cert: readFileSync('/path/to/cert.pem'),
+  key: readFileSync('/path/to/key.pem')
 });
 const wss = new WebSocket.Server({ server });
 app.use(cors(

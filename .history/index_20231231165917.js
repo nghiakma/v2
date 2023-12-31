@@ -8,8 +8,8 @@ dotenv.config()
 
 const app = express();
 const server = https.createServer(app,{
- cert: fss.readFileSync('./cetificates/cert.pem'),
-  key: fss.readFileSync('./cetificates/key.pem')
+ cert: fss.readFileSync('/path/to/cert.pem'),
+  key: fss.readFileSync('/path/to/key.pem')
 });
 const wss = new WebSocket.Server({ server });
 app.use(cors(
