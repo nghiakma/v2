@@ -3,29 +3,19 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const https = require('https');
 const fss = require('fs');
-const WebSocket = require('ws')
+const WebSocket = require('wss')
 dotenv.config()
 
 const app = express();
-const httpsOptions = {
-    cert: fss.readFileSync('./cetificates/cert.pem'),
-    key: fss.readFileSync('./cetificates/key.pem')
-  };
-
-const server = https.createServer(httpsOptions,app)
-//  cert: fss.readFileSync('./cetificates/cert.pem'),
-//   key: fss.readFileSync('./cetificates/key.pem')
-// });
+const server = https.createServer(app,{
+ cert: fss.readFileSync('./cetificates/cert.pem'),
+  key: fss.readFileSync('./cetificates/key.pem')
+});
 const wss = new WebSocket.Server({ server });
 app.use(cors(
     {
         origin: [
             "http://localhost:3000",
-            "http://127.0.0.1:3000",
-            "http://localhost:3001",
-            "http://127.0.0.1:3001",
-            "http://192.168.33.103:8080",
-            "https://attendace-bn4c.onrender.com/"
         ],
         // origin: '*',s
         credentials: true,
@@ -64,9 +54,12 @@ wss.on('connection', (socket, req) => {
     });
 });
 
+app.use((err,req,res,next)=>{
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+})
 
 
-
-server.listen(8080,() => {
+app.listen(8080,() => {
     console.log('Server is running on port 8080')
 })
