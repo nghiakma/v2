@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const WebSocket = require('ws');
-const https = require('https');
+const http = require('http');
 dotenv.config()
 
 const app = express();
